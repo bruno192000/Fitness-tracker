@@ -22,6 +22,7 @@ async function initExercise() {
 
   if (location.search.split("=")[1] === undefined) {
     workout = await API.createWorkout()
+    console.log(workout)
   }
   if (workout) {
     location.search = "?id=" + workout._id;
@@ -104,7 +105,6 @@ async function handleFormSubmit(event) {
     workoutData.name = cardioNameInput.value.trim();
     workoutData.distance = Number(distanceInput.value.trim());
     workoutData.duration = Number(durationInput.value.trim());
-
   } else if (workoutType === "resistance") {
     workoutData.type = "resistance";
     workoutData.name = nameInput.value.trim();
@@ -135,20 +135,19 @@ function clearInputs() {
   repsInput.value = "";
   resistanceDurationInput.value = "";
   weightInput.value = "";
+  completeButton.setAttribute("disabled", true);
+  addButton.setAttribute("disabled", true);
 }
 
 if (workoutTypeSelect) {
   workoutTypeSelect.addEventListener("change", handleWorkoutTypeChange);
 }
-// /exercise Complete 
 if (completeButton) {
   completeButton.addEventListener("click", function (event) {
     shouldNavigateAway = true;
     handleFormSubmit(event);
   });
 }
-
-// /Add Exercise 
 if (addButton) {
   addButton.addEventListener("click", handleFormSubmit);
 }
